@@ -16,15 +16,37 @@ fetch('https://pokeapi.co/api/v2/pokemon/pikachu')
   .catch((error) => console.error(error.message));
 ```
 
-**Your Answer:**
+**Your Answer:** 
 
+The problem is that the first `.then()` is not returning the `readingPromise` Promise. Without it, the second `.then()` receives `undefined`. To get the expected result, the first `.then()` must return `readingPromise` for the second `.then()` to reference.
+
+```js
+fetch('https://pokeapi.co/api/v2/pokemon/pikachu')
+  .then((response) => {
+    if (!response.ok) throw Error(`Fetch failed.`);
+    const readingPromise = response.json();
+    return readingPromise;
+  })
+  .then((data) => {
+    console.log(data); // undefined!
+  })
+  .catch((error) => console.error(error.message));
+```
+
+By making this change, we ensure that the second `.then()` receives a Promise to resolve or reject.
 
 ## Question 2: Development Servers and CORS
 
 A student opens their `index.html` file directly in the browser (using the `file://` protocol). Their `<script type="module">` tag and `fetch()` call both fail. Explain why, and what they should do instead.
 
-**Your Answer:**
+**Your Answer:** 
 
+The `file://` protocol does not allow resources to load from a different origin due to the browser's **CORS** (Cross-Origin Resource Sharing) restrictions. This behavior prevents the browser from:
+
+- Reading ES modules such as `import` and `export` because they are not from the same origin as the served file.
+- Retrieving third-party API data. `.fetch()` is blocked as well because it performs CRUD operations from another origin.
+
+To solve this, use a **development server** like **Vite** that allows programmers to use the `http://` protocol, which allows these features to work properly.
 
 ## Question 3: The `fetch` Response Object
 
@@ -35,9 +57,9 @@ const response = await fetch(url);
 const data = await response.json();
 ```
 
-**Your Answer:**
+**Your Answer:** 
 
-
+`fetch()` only rejects for network errors (e.g. no internet connection). **HTTP** errors like _404_ or _500_ are considered **successful** (resolved). By checking `response.ok`, we're ensuring that the **HTTP** status is **successful** (2xx). Without this check, we'd try to parse error responses, resulting in unexpected behavior or errors when calling `response.json()`.
 
 ## Question 4: Async/Await Conversion
 
@@ -61,7 +83,19 @@ const getJoke = () => {
 
 **Your Answer:**
 
-
+```js
+const getJoke = async() => {
+  try {
+    const response = await fetch('https://v2.jokeapi.dev/joke/Programming?type=twopart');
+    if (!response.ok) throw Error(`Fetch failed. ${response.status}`);
+    const data = await response.json();
+    return { data, error: null };
+  }
+  catch (error) {
+    return {data: null, error};
+  }
+};
+```
 
 ## Question 5: `event.preventDefault()` and Form Handling
 
@@ -76,9 +110,11 @@ form.addEventListener('submit', (event) => {
 
 What is wrong? What happens when they click submit, and how do they fix it?
 
-**Your Answer:**
+**Your Answer:** 
 
+The issue is that HTML forms have a default behavior: when submitted, they refresh the page or redirect to a given URL. This happens instantly when the user clicks the button and before the DOM update occurs. This prevents `#output` from displaying the name to the user.
 
+To fix this, add `event.preventDefault()` at the start of the event handler to prevent the page refresh, allowing the DOM to update `#output` properly.
 
 ## Question 6: Putting It All Together
 
@@ -96,4 +132,13 @@ The steps below describe how to build a form that fetches Pokemon data from `htt
 - J. Create the HTML form with a name input and output elements for displaying results
 
 **Your Answer:**
-
+- J. Create the HTML form with a name input and output elements for displaying results
+- E. Add a `'submit'` event listener to the form
+- B. Call `event.preventDefault()` to stop the page from reloading
+- G. Extract the Pokemon name from the form input
+- H. Send a GET request with `fetch()` using the Pokemon name in the URL
+- C. Check `response.ok` and throw an error if the response failed
+- A. Parse the response body with `await response.json()`
+- D. Update the DOM with the Pokemon's data
+- F. Handle errors in the `catch` block (display an error message)
+- I. Reset the form with `form.reset()`
