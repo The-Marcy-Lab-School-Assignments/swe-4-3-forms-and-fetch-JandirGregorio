@@ -14,7 +14,6 @@ export const getRandomPokemon = async () => {
     return { data: pokemonObj, error: null};
   }
   catch (error) {
-    console.log(error)
     return { data: null, error};
   }
 };

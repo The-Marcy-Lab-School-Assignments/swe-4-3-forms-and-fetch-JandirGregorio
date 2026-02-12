@@ -13,54 +13,27 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-a:hover {
-  color: #535bf2;
+main {
+  width: 100%;
+  max-width: 1200px;
+  padding: 2rem;
 }
 
 body {
-  margin: 0;
   display: flex;
-  place-items: center;
-  min-width: 320px;
+  justify-content: center;
+  min-width: 80%;
   min-height: 100vh;
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
-}
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #f7df1eaa);
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
 
 button {
@@ -82,15 +55,64 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+#pokemon-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#discovered-list {
+  display: grid;
+  /* gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto; */
+  grid-template-columns: 1fr;
+  justify-content: center;
+}
+
+#discovered-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(67, 67, 67);
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 8px;
+  transition: transform 0.25s, border .25s;
+  min-width: 200px;
+}
+
+#discovered-list li:hover {
+  transform: translateY(-.2rem);
+  border: 1px solid #646cff;
+}
+
+@media (min-width: 768px) {
+  #discovered-list {
+    grid-template-columns: repeat(2, 1fr);
   }
-  a:hover {
-    color: #747bff;
+}
+
+@media (min-width: 900px) {
+  #discovered-list {
+    grid-template-columns: repeat(3, 1fr);
   }
-  button {
-    background-color: #f9f9f9;
+}
+
+@media (min-width: 1200px) {
+  #discovered-list {
+    grid-template-columns: repeat(4, 1fr);
   }
 }

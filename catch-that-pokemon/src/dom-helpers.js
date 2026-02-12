@@ -20,9 +20,11 @@ export const renderPokemon = (pokemonObj) => {
 };
 
 export const renderError = (msg) => {
+  successMessage.textContent = '';
   errorMessage.textContent = msg;
 };
 
 export const renderSuccess = (msg) => {
+  errorMessage.textContent = '';
   successMessage.textContent = msg;
 };
