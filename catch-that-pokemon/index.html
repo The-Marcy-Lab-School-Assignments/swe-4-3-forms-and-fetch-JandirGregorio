@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Go Catch That Pokémon!</title>
+    <link rel="stylesheet" href="src/style.css">
+  </head>
+  <body>
+    <main>
+      <!-- Information section -->
+      <section>
+        <h1>Pokemon!</h1> 
+        <p id="error"></p>
+        <p id="success"></p>
+      </section>
+      
+      <!-- Form section -->
+      <section id="form-section">
+        <form action="https://formspree.io/f/maqdqzlk" method="POST" id="pokemon-form">
+          <h2>Capture Pokemon</h2>
+          <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div>
+            <label for="types">Types</label>
+            <input type="text" id="types" name="types" required>
+          </div>
+          <div>
+            <label for="isFavorite">Favorite</label>
+            <input type="checkbox" id="isFavorite" name="isFavorite">
+          </div>
+          <button type="submit">Capture</button>
+        </form>
+      </section>
+
+      <!-- Discovered Pokemon section -->
+      <section>
+        <h2>Discovered Pokemon</h2>
+        <button id="discover-button">Find A New Pokemon!</button>
+        <ul id="discovered-list">
+        </ul>
+      </section>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
