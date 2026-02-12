@@ -72,10 +72,6 @@ section {
 
 #discovered-list {
   display: grid;
-  /* gap: 20px;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto; */
   grid-template-columns: 1fr;
   justify-content: center;
 }
